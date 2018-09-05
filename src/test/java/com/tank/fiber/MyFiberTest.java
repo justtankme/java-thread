@@ -19,26 +19,26 @@ public class MyFiberTest {
 		FiberForkJoinScheduler scheduler = new FiberForkJoinScheduler("MyfiberScheduler", 400);
 		MyFiberScheduler<Integer> myFiberScheduler = new MyFiberScheduler<>();
 		List<Fiber<Integer>> fiberList = new ArrayList<>();
-		for(int i = 0; i < 400; i ++) {
+		for(int i = 0; i < 4000; i ++) {
 			fiberList.add(myFiberScheduler.submit(scheduler, new MyFiber(1)));
 		}
 		int count = 0;
-		fiberList.parallelStream().map(t -> {
-			try {
-				return t.get();
-			} catch (ExecutionException | InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}).recollect(collector);
-		
-//		forEach(fiber -> {
+//		fiberList.parallelStream().map(t -> {
 //			try {
-//				count += fiber.get();
+//				return t.get();
 //			} catch (ExecutionException | InterruptedException e) {
+//				// TODO Auto-generated catch block
 //				e.printStackTrace();
 //			}
-//		});
+//		}).collect(Collector.);
+		
+		fiberList.forEach(fiber -> {
+			try {
+				fiber.get();
+			} catch (ExecutionException | InterruptedException e) {
+				e.printStackTrace();
+			}
+		});
 		
 		System.out.println("all task takes " + (Instant.now().toEpochMilli() - bgn.toEpochMilli()) + " ms");
 	}

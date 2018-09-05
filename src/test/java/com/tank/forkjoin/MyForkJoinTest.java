@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 public class MyForkJoinTest {
 	public static void main(String[] args) {
 		Instant bgn = Instant.now();
-		ForkJoinPool pool = new ForkJoinPool(1, ForkJoinPool.defaultForkJoinWorkerThreadFactory, null, true);
+		ForkJoinPool pool = new ForkJoinPool(8, ForkJoinPool.defaultForkJoinWorkerThreadFactory, null, true);
 		FolderProcessor system = new FolderProcessor("/Users/duanzhiwei/work", "java");
 
 		pool.execute(system);
